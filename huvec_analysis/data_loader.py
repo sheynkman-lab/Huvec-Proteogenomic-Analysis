@@ -1,7 +1,6 @@
 # data loader file to process all of the MM inout 
 
 #%%
-from shutil import SameFileError
 import pandas as pd
 from Bio import SeqIO
 from huvec_analysis import huvec_config

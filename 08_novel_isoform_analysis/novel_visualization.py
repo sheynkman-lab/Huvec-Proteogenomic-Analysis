@@ -7,6 +7,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from openpyxl.drawing.image import Image
 from openpyxl import Workbook
+from huvec_analysis import huvec_config
 
 def filter_mzml(mzml_filepath, novel_scan_numbers):
     filtered_mzml = {}
@@ -72,9 +73,13 @@ def process_metamorpheus_psm(psm_filepath, novel_scans):
     return psm 
 
 
-def plot_mirror_into_exel(novel_scans, psm, mzml_directory):
-    if not os.path.exists('individual_mirror_plots'):
-        os.mkdir('individual_mirror_plots')
+def plot_mirror_into_exel(psm, mzml_directory):
+    if not os.path.exists('plot'):
+        os.mkdir('plot')
+    if not os.path.exists('plot/individual_mirror_plots'):
+        os.mkdir('plot/individual_mirror_plots')
+
+
     filename_column = 'A'
     scan_number_column = 'B'
     peptide_base_column = 'C'
@@ -111,21 +116,20 @@ def plot_mirror_into_exel(novel_scans, psm, mzml_directory):
         scans = list(group['Scan Number'])
 
         mzml_filepath=os.path.join(mzml_directory, filename) + '.mzML'
-      # print(scans)
         novel_mzml = filter_mzml(mzml_filepath, scans)
         for index, row in group.iterrows():
             scan = row['Scan Number']
-            print(scan)
-            mzml_data = extract_mzml_data(novel_mzml[scan])
-            mirror = spectra_plot.SpectraPlot(
-                mass_charge_ratios=mzml_data['m/z array'],
-                intensities = mzml_data['intensity array'])
-            mirror.labelled_spectra = row['matched_ions']
-            mirror.filter()
-            ax = mirror.mirror_plot(label=True,adjust_annotation = False) #TODO fix plot size fig.set_size_inches(18.5, 10.5)
-            plt.savefig(f'individual_mirror_plots/mass-spec_{scan}.png')
-            img = Image(f'individual_mirror_plots/mass-spec_{scan}.png')
-            ws.add_image(img, f'{mirrorplot_column}{excel_row_number}')
+            # print(scan)
+            # mzml_data = extract_mzml_data(novel_mzml[scan])
+            # mirror = spectra_plot.SpectraPlot(
+            #     mass_charge_ratios=mzml_data['m/z array'],
+            #     intensities = mzml_data['intensity array'])
+            # mirror.labelled_spectra = row['matched_ions']
+            # mirror.filter()
+            # ax = mirror.mirror_plot(label=True,adjust_annotation = False) #TODO fix plot size fig.set_size_inches(18.5, 10.5)
+            # plt.savefig(f'plot/individual_mirror_plots/mass-spec_{scan}.png')
+            # img = Image(f'plot/individual_mirror_plots/mass-spec_{scan}.png')
+            # ws.add_image(img, f'{mirrorplot_column}{excel_row_number}')
             ws.row_dimensions[excel_row_number].height=375
 
             ws[f'{filename_column}{excel_row_number}']=row['File Name']
@@ -139,34 +143,18 @@ def plot_mirror_into_exel(novel_scans, psm, mzml_directory):
             ws[f'{psm_count_column}{excel_row_number}']=row['PSM Count (unambiguous, <0.01 q-value)']
             ws[f'{mass_diff_columns}{excel_row_number}']=row['Mass Diff (ppm)']
             excel_row_number = excel_row_number + 1
-    wb.save(f'novel_peptides_220119.xlsx')
+    wb.save(f'stats/huvec_novel_peptides.xlsx')
 
-#%%
-psm_filepath = '/Users/madison/Documents/Sheynkman_lab/Huvec-project/huvec-proteogenomics/HUVEC_manuscript_analysis/0_pre_analysis/metamorpheus_table/AllPSMs.PacBioHybrid.tsv'
-novel_filepath = '/Users/madison/Documents/Sheynkman_lab/Huvec-project/huvec-proteogenomics/HUVEC_manuscript_analysis/12_novel_isoform_analysis/stats/pacbio_novel_peptides.tsv'
+psm_filepath = '../00_pre_analysis/metamorpheus_table/AllPSMs.PacBioHybrid.tsv'
+novel_filepath = 'stats/pacbio_hybrid_novel_peptides.tsv'
 
-# novel_scans = pd.DataFrame({
-#     'scan_num' : [89961, 60038, 57524], 
-#     'file_name':['210402_HUVECtrypsin_HCDETDorbi4hr_Fr16','210402_HUVECtrypsin_HCDETDorbi4hr_Fr16','210402_HUVECtrypsin_HCDETDorbi4hr_Fr16'], 
-#     'gene': ['gene1','gene2','gene3'],
-#     'acc':['PB.1.1', 'PB.1.2', 'PB.1.3'],
-#     'seq':['YABBA','DABBA','DO'], 
-#     'score':[0,0,0], 
-#     'qval':[0,0,0], 
-#     'gene_name':['gene1','gene2','gene3'], 
-#     'ec_priority':[0,0,0]
-#     })
 
 novel_scans = pd.read_table(novel_filepath)
-novel_scans.head()
 
 novel_scans_list = []
 for index, row in novel_scans.iterrows():
-    novel_scans_list.append({'File Name' : row['file_name'], 'Scan Number': row['scan_num']})
+    novel_scans_list.append({'File Name' : row['File Name'], 'Scan Number': row['Scan Number']})
 psm = process_metamorpheus_psm(psm_filepath, novel_scans_list)
 
-#mzml_dir = '/Users/madison/Documents/Sheynkman_lab/Huvec-project/huvec-proteogenomics/HUVEC-Proteogenomics/huvec/raw_convert'
-mzml_dir = '/Volumes/sheynkman/ms/ms_data/210831_huvec_fractions_tryp_HCDonly/mzml'
-plot_mirror_into_exel(novel_scans, psm, mzml_dir)
+plot_mirror_into_exel( psm, huvec_config.MZML_DIRECTORY)
 
-  # %%

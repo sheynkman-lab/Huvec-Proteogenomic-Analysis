@@ -1,4 +1,4 @@
-#%%
+
 import logging
 import matplotlib.pyplot as plt
 import numpy as np
@@ -167,13 +167,3 @@ class SpectraPlot:
             self._labelled_mirrorplot(ax, vlines, adjust_annotation)
         return ax
 
-# # %%
-# label = {
-#     'b+1':{'m/z': 5, 'intensity': 44},
-#     'c':{'m/z': 25, 'intensity': 21}}
-# spectraplot = SpectraPlot(mass_charge_ratios=[4,5,6, 8, 19], intensities=[15,44,3, 34, 21])
-# spectraplot.labelled_spectra = label
-# ax, vlines = spectraplot.mirror_plot(label = True)
-# plt.show()
-
-# %%

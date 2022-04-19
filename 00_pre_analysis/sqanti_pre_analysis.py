@@ -4,15 +4,13 @@
 # current_dir = os.path.dirname(os.path.realpath(__file__))
 # parent_dir = os.path.dirname(current_dir)
 # sys.path.append(parent_dir)
-from numpy.core.fromnumeric import swapaxes
 import pandas as pd 
 import numpy as np
-import os, sys
-from Bio import SeqIO
+import os
 from huvec_analysis import huvec_config # parameters for plotting
 
 # folder to hold the intermediate SQANTI table 
-sqanti_dir = '220407sqanti_info'
+sqanti_dir = 'sqanti_info'
 if not os.path.exists(sqanti_dir):
     os.makedirs(sqanti_dir)
 
@@ -60,6 +58,6 @@ sqanti_info = sqanti_info[sqanti_info.cat !='ISM']
 # sqanti_info = sqanti_info[['pb_acc', 'len', 'cat', 'gene', 'transcript', 'cat2', 'fl_cts', 'cpm', 'log2cpm', 'fractional_abundance', 'protein_classification_base', 'ec_priority', 'pandey_upreg_gene']]
 sqanti_info = sqanti_info[['pb_acc', 'len', 'cat', 'gene', 'transcript', 'cat2', 'fl_cts', 'cpm', 'log2cpm', 'fractional_abundance', 'protein_classification_base', 'ec_priority']]
 
-sqanti_info.to_csv('220407sqanti_info/sqanti_info.tsv', sep = '\t', index= None)
+sqanti_info.to_csv(f'{sqanti_dir}/sqanti_info.tsv', sep = '\t', index= None)
 
 #%%

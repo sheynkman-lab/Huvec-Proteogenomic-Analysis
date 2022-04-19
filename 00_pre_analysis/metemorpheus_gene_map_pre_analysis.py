@@ -11,7 +11,7 @@ from Bio import SeqIO
 from huvec_analysis import huvec_config # parameters for plotting
 
 # all intermediate tables go into their own folder 
-table_dir = 'non_calib_MM_tables'
+table_dir = 'metamorpheus_table'
 if not os.path.exists(table_dir):
     os.makedirs(table_dir)
 
@@ -116,16 +116,16 @@ gencode_protein_grps = read_protein_group_file(gencode_protein_grps_path, gencod
 uniprot_protein_grps = read_protein_group_file(uniprot_protein_grps_path, uniprot_gene_map)
 
 # output these files to CSVs for easy access
-pacbio_hybrid_peps.to_csv('220330_metamorpheus_table/AllPeptides.PacBioHybrid.tsv', sep = '\t', index= None)
-gencode_peptides.to_csv('220330_metamorpheus_table/AllPeptides.GENCODE.tsv', sep = '\t', index= None )
-uniprot_peptides.to_csv('220330_metamorpheus_table/AllPeptides.Uniprot.tsv', sep = '\t', index= None)
+pacbio_hybrid_peps.to_csv(f'{table_dir}/AllPeptides.PacBioHybrid.tsv', sep = '\t', index= None)
+gencode_peptides.to_csv(f'{table_dir}/AllPeptides.GENCODE.tsv', sep = '\t', index= None )
+uniprot_peptides.to_csv(f'{table_dir}/AllPeptides.Uniprot.tsv', sep = '\t', index= None)
 
-pacbio_hybrid_psm.to_csv('220330_metamorpheus_table/AllPSMs.PacBioHybrid.tsv', sep = '\t', index=None)
-gencode_psm.to_csv('220330_metamorpheus_table/AllPSMs.GENCODE.tsv', sep = '\t', index=None)
-uniprot_psm.to_csv('220330_metamorpheus_table/AllPSMs.UniProt.tsv', sep= '\t', index=None)
+pacbio_hybrid_psm.to_csv(f'{table_dir}/AllPSMs.PacBioHybrid.tsv', sep = '\t', index=None)
+gencode_psm.to_csv(f'{table_dir}/AllPSMs.GENCODE.tsv', sep = '\t', index=None)
+uniprot_psm.to_csv(f'{table_dir}/AllPSMs.UniProt.tsv', sep= '\t', index=None)
 
-pacbio_hybrid_protein_grp.to_csv('220330_metamorpheus_table/AllProteinGroups.PacBioHybrid.tsv', sep = '\t', index=None)
-gencode_protein_grps.to_csv('220330_metamorpheus_table/AllProteinGrouos.GENCODE.tsv', sep = '\t', index= None)
-uniprot_protein_grps.to_csv('220330_metamorpheus_table/AllProteinGroups.UniProt.tsv', sep = '\t', index= None)
+pacbio_hybrid_protein_grp.to_csv(f'{table_dir}/AllProteinGroups.PacBioHybrid.tsv', sep = '\t', index=None)
+gencode_protein_grps.to_csv(f'{table_dir}/AllProteinGrouos.GENCODE.tsv', sep = '\t', index= None)
+uniprot_protein_grps.to_csv(f'{table_dir}/AllProteinGroups.UniProt.tsv', sep = '\t', index= None)
 #%%
 

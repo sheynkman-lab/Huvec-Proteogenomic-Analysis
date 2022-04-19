@@ -51,6 +51,7 @@ PIPELINE_RESULTS_DIRECTORY='/Volumes/sheynkman/projects/huvec_proteogenomics/huv
 
 #this holds the gtf files and all of the info from gencode 
 REFERENCE_DIRECTORY= '/Volumes/sheynkman/projects/huvec_proteogenomics/input'
+MZML_DIRECTORY = '/Volumes/sheynkman/ms/ms_data/210831_huvec_fractions_tryp_HCDonly/mzml'
 # REFERENCE_DIRECTORY= '/Users/madison/Documents/Sheynkman_lab/Huvec-project/huvec-proteogenomics/HUVEC_manuscript_analysis/input'
 #REFERENCE_DIRECTORY= '/Users/gloriasheynkman/Documents/research_drive/projects/huvec_proteogenomics/HUVEC-Proteogenomics/input'
 EXPERIMENT_NAME='huvec'
