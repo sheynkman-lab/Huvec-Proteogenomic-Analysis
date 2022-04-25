@@ -1,4 +1,4 @@
-# file to read in the novel peptides excel sheet add the ec significance 
+# file to read in the novel peptides excel sheet add information of whether a gene is endothelial related. 
 # also deetrmine how many of the novel peps lead to single mapping vs indirect mapping 
 
 import pandas as pd 

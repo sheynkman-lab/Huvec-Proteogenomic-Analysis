@@ -1,3 +1,4 @@
+# Creates spetral plots of Metamorpheus PSMs
 
 import logging
 import matplotlib.pyplot as plt
